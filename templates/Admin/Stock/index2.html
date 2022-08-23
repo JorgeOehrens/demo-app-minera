@@ -1,0 +1,143 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="main-content">
+    <div class="card">
+
+    
+        <div class="card-body">
+            <h4>Histórico</h4>
+            <div class="row align-items-md-center">
+                <div class="col-md-4">
+                    
+                </div>
+                <div class="col-md-8">
+                    <div class="text-md-right m-v-10">
+                        <div class="btn-group m-r-10">
+                            
+                        </div>
+                        <form action="{% url 'export' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary"  type="submit">
+                                <i class="anticon anticon-plus"></i>
+                                <span class="m-l-5">Exportar excel</span>
+                            </button>
+                        </form>
+                        <a href="{% url 'actualizar_stock' %}"> 
+                        <button class="btn btn-primary"  type="submit">
+                            <i class="anticon anticon-plus"></i>
+                            <span class="m-l-5">Actualizar stock</span>
+                        </button>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 table-responsive">
+                <table  id="data-table"class="table dataTables">
+                    <thead>
+                        <tr>
+                            <th>Ordenado por fecha</th>
+
+                            <th>Item</th>
+                            <th>Unidad</th>
+                            <th>Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Stock remanente</th>
+
+
+                            <th>Asignación</th>
+                            <th>Frente</th>
+
+                            <th>Horómetro</th>
+                            <th>Registrado por</th>
+                            <th>Fecha registro</th>
+                            <th></th>
+                            <th></th>
+
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in registros %}
+                        <tr>
+                            <td>{{i.fecha.year}}/{{i.fecha.month}}/{{i.fecha.day}}</td>
+
+                            <td>{{i.item}}</td>
+                            <td>{{i.item.unidad}} </td>
+
+                            
+                            <td>{{i.movimiento}}</td>
+                            <td>{{i.cantidad}} {{i.item.unidad}} </td>
+                            <td>{{i.stock}} {{i.item.unidad}} </td>
+
+                            {% if i.asignacion.nombre == "x" %}
+                            <td> </td>
+
+                            {% else %}
+
+                            <td>{{i.asignacion}}</td>
+
+                            {% endif %}
+
+                            {% if i.frente.nombre == "x" %}
+                            <td> </td>
+
+                            {% else %}
+
+                            <td>{{i.frente}}</td>
+
+                            {% endif %}
+
+
+                            {% if i.horometro == 0.0 %}
+                            <td> </td>
+
+                            {% else %}
+                            <td>{{i.horometro}}</td>
+
+                            {% endif %}
+
+                            <td>{{i.creador_registro.first_name}}  {{i.creador_registro.last_name}}</td>
+                            <td>{{i.fecha_registro.year}}/{{i.fecha_registro.month}}/{{i.fecha_registro.day}}</td>
+
+                            <td class="text-right">
+                                <a href="{% url 'edit_registro' i.id %} ">  <button class="btn btn-success m-r-5">
+                                    Editar 
+                                </button>
+                            </a>
+                            </td>
+                            <td class="text-right">
+                                <a href="{% url 'eliminar_registro' i.id %} ">  <button class="btn btn-danger  m-r-5">
+                                    Eliminar 
+                                </button>
+                            </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+            
+    <link href="../../../static/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- page js -->
+    <script src="{% static 'assets/vendors/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables/dataTables.bootstrap.min.js' %}"></script>
+
+    <script>
+$('#data-table').DataTable({ /* Disable initial sort */
+             "aaSorting": [] });
+    </script>
+
+
+</div>
+
+{% endblock %}  

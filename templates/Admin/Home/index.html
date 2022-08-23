@@ -1,0 +1,187 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+{% load filtros %}
+{% load static %}
+
+
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="m-l-15">
+                            <h2 class="m-b-0">{{n_empleados_no_staff}}</h2>
+                            <p class="m-b-0 text-muted">Usuarios activos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="m-l-15">
+                            <h2 class="m-b-0">{{n_regsitros_ingresos_fecha}} Ingresos</h2>
+                            <p class="m-b-0 text-muted"> en los últimos 7 días</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="m-l-15">
+                            <h2 class="m-b-0">{{n_registros_salidas_fecha}} Salidas</h2>
+                            <p class="m-b-0 text-muted">en los últimos 7 días</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="m-l-15">
+                            <h2 class="m-b-0">{{n_items_stock}}/{{n_items}}</h2>
+                            <p class="m-b-0 text-muted">Productos con stock</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                   <div class="d-flex justify-content-between align-items-center">
+                        <h5>Últimos 7 días items</h5>
+                        <div>
+                            <a href="{% url 'control-stock' %}" class="btn btn-sm btn-default">Ver Todo</a>
+                        </div>
+                    </div>
+                    <div class="m-t-30">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Stock remitente</th>
+                                        <th>N° Ingresos</th>
+                                        <th >N° Salidas</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for a in items %}
+
+                                    <tr>
+                                        <td>
+                                            <div class="media align-items-center">
+                                                <div class="avatar avatar-image rounded">
+                                                    <img src="{% static 'assets/images/others/thumb-9.jpg' %}" alt="">
+                                                </div>
+                                                <div class="m-l-10">
+                                                    <span>{{a.nombre}}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{a.total_item}} {{a.unidad}} </td>
+                                        <td>{{a.nombre | ingresos}}</td>
+                                        <td>{{a.nombre | salidas}}</td>
+
+                                        <td class="text-right">
+                                          <a href="{% url 'registro_fecha' a.id %} ">  <button class="btn btn-success m-r-5">
+                                                Ver 
+                                            </button>
+                                        </a>
+                                        </td>
+
+                                        
+                                    </tr>   
+                                    
+
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <div class="col-md-12 col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="m-b-0">Ultimos registros</h5>
+                    <div>
+                        <a href="{% url 'registros' %} " class="btn btn-sm btn-default">Ver Registros</a>
+                    </div>
+                </div>
+                <div class="m-t-30">
+                    <div class="m-b-25">
+
+                        {% for a in registros_total %}
+                        <div class="d-flex align-items-center justify-content-between">
+
+
+                            <div class="media align-items-center">
+                                <div class="font-size-35">
+                                    <i class="anticon anticon-file-word text-primary"></i>
+                                </div>
+                                <div class="m-l-15">
+                                    <h6 class="m-b-0">
+                                        <a class="text-dark" href="javascript:void(0);">{{a.movimiento}} - {{a.item.nombre}} </a>
+                                    </h6>
+                                    <p class="text-muted m-b-0">{{a.cantidad}} {{a.item.unidad}} </p>
+                                </div>
+                            </div>
+                            <!-- <div class="dropdown dropdown-animated scale-left">
+                                <a class="text-gray font-size-18" href="javascript:void(0);" data-toggle="dropdown">
+                                    <i class="anticon anticon-ellipsis"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item" type="button">
+                                        <i class="anticon anticon-eye"></i>
+                                        <span class="m-l-10">View</span>
+                                    </button>
+                                    <button class="dropdown-item" type="button">
+                                        <i class="anticon anticon-download"></i>
+                                        <span class="m-l-10">Download</span>
+                                    </button>
+                                    <button class="dropdown-item" type="button">
+                                        <i class="anticon anticon-delete"></i>
+                                        <span class="m-l-10">Remove</span>
+                                    </button>
+                                </div>
+                            </div> -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+</div>
+
+{% endblock %}  

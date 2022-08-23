@@ -1,0 +1,47 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+{% load filtros %}
+
+
+<div class="main-content">
+    
+    <div class="row" id="card-view">
+        {% for a in usuarios %}
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="m-t-20 text-center">
+                        <div class="avatar avatar-image" style="height: 100px; width: 100px;">
+                            <img src="../../../static/assets/images/avatars/thumb-1.jpg" alt="">
+                        </div>
+                        <h4 class="m-t-30">{{a.first_name}} {{a.last_name}}</h4>
+                        <p>{{a.email}}</p>
+                    </div>
+                    {% if a.is_staff %}
+                    <div class="d-flex align-items-center">
+                        <span class="badge badge-success badge-dot m-r-10"></span>
+                        <span>Administrador</span>
+                    </div>
+
+                    {% else %}
+                    <div class="d-flex align-items-center">
+                        <span class="badge badge-success badge-dot m-r-10"></span>
+                        <span>Trabajador</span>
+                    </div>
+                    {% endif %}
+                    <div class="text-center m-t-30">
+                        <a href="{% url 'usuarios_details' a.id %} " class="btn btn-primary btn-tone">
+                            <span class="m-l-5">Revisar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+
+{% endblock %}  

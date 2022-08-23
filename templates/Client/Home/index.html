@@ -1,0 +1,44 @@
+{% extends 'Shared/nav-bar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+    <div class="page-header">
+        <h2 class="header-title">Inicio</h2>
+        <div class="header-sub-title">
+            <nav class="breadcrumb breadcrumb-dash">
+                <a href="{% url 'home' %}" class="breadcrumb-item active"><i class="anticon anticon-home m-r-5"></i>Inicio</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="card col-md-3">
+            <div class="card-body">
+                <h4>Registrar Stock</h4>
+            </div>
+            <div class="card-footer">
+                <div class="text-right">
+                   <a href="{% url 'avance' %} "> <button class="btn btn-success m-r-5">Registrar</button></a>
+
+                </div>
+            </div>
+        </div>
+
+        
+
+        
+
+        
+    </div>
+    
+
+    
+
+    
+
+    
+</div>
+
+
+{% endblock %}

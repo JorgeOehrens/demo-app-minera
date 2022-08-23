@@ -1,0 +1,63 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+
+
+<div class="main-content">
+
+    <div class="card">
+
+    
+        <div class="card-body">
+            <h4>Resumen de stock</h4>
+            <p>Podrás agregar nuevos registros de stock<p>
+            <div class="row align-items-md-center">
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+            <div class="col-md-12 table-responsive">
+                <table  id="data-table"class="table dataTables">
+                    <thead>
+                        <tr>
+                            <th >Nombre</th>
+                            <th >Total stock</th>
+                            <th >Unidad</th>
+
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in item %}
+                        <tr>
+                            <td>{{a.nombre}}</td>
+                            <td>{{a.total_item}}</td>
+                            <td>{{a.unidad}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+            
+    <link href="../../../static/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- page js -->
+    <script src="../../../static/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../../static/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $('#data-table').DataTable();
+
+    </script>
+
+
+    
+</div>
+
+{% endblock %}  

@@ -1,0 +1,189 @@
+{% extends 'Shared/nav-bar.html' %}
+
+{% block content %}
+
+<div class="main-content">
+    
+    <div class="page-header">
+        <h2 class="header-title">Stock</h2>
+        <div class="header-sub-title">
+            <nav class="breadcrumb breadcrumb-dash">
+                <a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Inicio</a>
+                <a class="breadcrumb-item" href="#">Stock</a>
+                <span class="breadcrumb-item active">Salida</span>
+            </nav>
+        </div>
+    </div>
+    
+
+    <div class="card">
+        <div class="modal fade" id="create-new-project">
+            <div class="modal-dialog">
+                
+
+
+                    <div class="modal-content">
+                        <form id="registro" action="{%url 'CrearSalida' %}" method="post">
+
+                            {% csrf_token %}
+                            <div class="modal-header">
+                                <h5 class="modal-title">Nuevo registro de salida</h5>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    <i class="anticon anticon-close"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="">Fecha salida</label>
+                                    <input type="datetime-local" class="form-control" id="fecha_salida" name="fecha_salida" required>
+                                </div>
+                                
+                                    
+
+                                <div class="form-group">
+                                    <label for="">Item</label>
+                                    <select class="form-control" id="item" name="item" >
+                                        <option value="None">Seleccione Item</option>
+                                    {%for a in Item %}
+                                        <option value="{{a.nombre}}" >{{a.nombre}}</option >
+                                    {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="">Cantidad</label>
+                                    <input type="number" class="form-control" id="cantidad" name="cantidad" required >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="new-project-name">Horómetro o kilometros</label>
+                                    <input type="number" class="form-control" id="horometro" name="horometro" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="new-project-name">Observaciones (opcional)</label>
+                                    <textarea name="comentarios" rows="5" cols="60"></textarea>
+
+                                </div>
+
+
+                                
+
+                                    
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" value="SUBMIT" class="btn btn-primary">Crear salida </button>
+                            </div>
+                        </form>
+                    </div>
+                
+
+            </div>
+    </div>
+        
+        <div class="card-body">
+            <h4>Ultimos registros de salida</h4>
+            <p>Podrás agregar nuevos registros de stock de salida<p>
+            <div class="row align-items-md-center">
+                <div class="col-md-6">
+                    
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-right m-v-10">
+                        <div class="btn-group m-r-10">
+                            
+                        </div>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#create-new-project">
+                            <i class="anticon anticon-plus"></i>
+                            <span class="m-l-5">Nueva salida</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="m-t-25">
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha registro</th>
+                            <th>Fecha salida</th>
+
+                            <th>Item</th>
+                            <th>Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Stock</th>
+
+                            <th>Registrado por</th>
+                            <th>Horómetro o Km</th>
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in Salidas %}
+                        <tr>
+                            <td>{{i.fecha_registro}}</td>
+                            <td>{{i.fecha_salida}}</td>
+
+                            <td>{{i.item}}</td>
+                            <td>{{i.movimiento}}</td>
+                            <td>{{i.cantidad}}</td>
+                            <td>{{i.stock}}</td>
+
+                            <td>{{i.creador_registro}}</td>
+
+                            <td>{{i.horometro}}</td>
+
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            
+
+            
+
+            
+        
+    </div>
+
+    <!-- <script type="text/javascript">
+    
+        $(document).on('submit','#registro', function(e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'CrearPost',
+                data:{
+                    item:$('#item').val(),
+                    unidad:$('#unidad').val(),
+                    cantidad:$('#cantidad').val(),
+                    asignacion:$('#asignacion').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+
+                
+                },
+                success:function(){
+                    
+    
+                }
+            });
+    
+        });
+        
+    </script> -->
+    
+</div>
+
+<!-- Core Vendors JS -->
+
+
+
+
+
+
+
+{% endblock %}

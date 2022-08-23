@@ -1,0 +1,113 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+
+<div class="main-content">
+
+    <form action="{% url 'edit_registro' id_regis %} " method="post" onSubmit="document.getElementById('submit').disabled=true;">
+        {% csrf_token %}
+
+        <div class="page-header no-gutters has-tab">
+            <div class="d-md-flex m-b-15 align-items-center justify-content-between">
+                <div class="media align-items-center m-b-15">
+                    <div class="avatar avatar-image rounded" style="height: 70px; width: 70px">
+                        <img src="../../../static/assets/images/others/thumb-16.jpg" alt="">
+                    </div>
+                    <div class="m-l-15">
+                        <h4 class="m-b-0">{{registro_edit.item.nombre}} | {{registro_edit.movimiento}}</h4>
+                        <p class="text-muted m-b-0">ID: {{registro_edit.id}}</p>
+                    </div>
+                </div>
+                <div class="m-b-15">
+                    <button class="btn btn-primary" type="post">
+                        <i class="anticon anticon-save"></i>
+                        <span>Guardar</span>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav nav-tabs" >
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#product-edit-basic">Información</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content m-t-15">
+            <div class="tab-pane fade show active" id="product-edit-basic" >
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productName">Fecha</label>
+                            <input type="datetime-local" value="{{año_a}}-{{mes_a}}-{{dia_a}}T{{hora}}" class="form-control" id="fecha" name="fecha" required>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productCategory">Item</label>
+
+                            <select class="custom-select" id="productCategory" name="item">
+                                <option value="{{registro_edit.item}}" selected>{{registro_edit.item}}</option>
+
+                                {% for a in items %}
+
+                                <option value="{{a.nombre}}">{{a.nombre}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productBrand">Movimiento</label>
+                            <select class="custom-select" id="productCategory" name="movimiento">
+                                <option value="{{registro_edit.movimiento}}" selected>{{registro_edit.movimiento}}</option>
+
+
+                                <option value="Ingreso">Ingreso</option>
+                                <option value="Salida">Salida</option>
+                            </select>                        
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productName">Cantidad</label>
+                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="{{registro_edit.cantidad}}" value="{{registro_edit.cantidad}}" >
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productName">Horometro</label>
+                            <input type="text" class="form-control" id="horonometro" name="horometro" placeholder="{{registro_edit.horometro}}" value="{{registro_edit.horometro}}" >
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productCategory">Asignación</label>
+
+                            <select class="custom-select" id="productCategory" name="asignacion">
+                                <option value="{{registro_edit.asignacion}}" selected>{{registro_edit.asignacion}}</option>
+
+                                {% for a in asignacioens %}
+
+                                <option value="{{a.nombre}}">{{a.nombre}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-semibold" for="productCategory">Frente</label>
+
+                            <select class="custom-select" id="productCategory" name="frente">
+                                <option value="{{registro_edit.frente}}" selected>{{registro_edit.frente}}</option>
+
+                                {% for a in frentes %}
+
+                                <option value="{{a.nombre}}">{{a.nombre}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div>
+
+
+{% endblock %}  

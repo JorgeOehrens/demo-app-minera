@@ -1,0 +1,105 @@
+{% extends 'Shared/nav-bar.html' %}
+
+{% block content %}
+<style>
+    #equipo{
+        display: none;
+    }
+    #frente{
+        display: none;
+    }
+    #estanque{
+        display: none;
+    }
+    
+    
+
+
+
+
+</style>
+<div class="main-content">
+
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                   <div class="d-flex justify-content-between align-items-center">
+                        <h5>Frentes</h5>
+                     
+                    </div>
+                    <div class="m-t-30">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+
+                                        <th>Nombre</th>
+                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for a in frentes %}
+                                    <tr>
+                                       
+                                        <td>
+                                            <div class="media align-items-center">
+                                           
+                                                <div class="m-l-10">
+                                                    <span>{{a.nombre}}</span>
+                                                </div>
+                                            </div>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-7">
+
+            <div class="card">
+                <div class=" " id="create-new-salida">
+                    <div class="">
+                        
+        
+        
+                            <div class="modal-content">
+                                <form id="registro" action="{%url 'frentes_registro' %}" method="post" enctype="multipart/form-data" onSubmit="document.getElementById('submit2').disabled=true;">
+        
+                                    {% csrf_token %}
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Nuevo frente </h5>
+                                        
+                                    </div>
+                                    <div class="modal-body">
+                                       
+                                        <div class="form-group">
+                                            <label for="">Nombre  </label>
+                                            <input type="text" class="form-control" id="nombre" name="nombre" required >
+                                        </div>
+                    
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" value="SUBMIT" id="submit2" class="btn btn-primary">Crear frente </button>
+                                    </div>
+                                </form>
+                            </div>
+                        
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

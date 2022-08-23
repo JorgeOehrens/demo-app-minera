@@ -1,0 +1,229 @@
+{% extends 'Shared/nav-bar-admin.html' %}
+{% block content %}
+{% load filtros %}
+<style>
+    
+    
+</style>
+
+<div class="main-content">
+    {% for a in usuario_detalles %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="d-md-flex align-items-center">
+                        <div class="text-center text-sm-left ">
+                            <div class="avatar avatar-image" style="width: 150px; height:150px">
+                                <img src="../../../static/assets/images/avatars/thumb-3.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="text-center text-sm-left m-v-15 p-l-30">
+                            <h2 class="m-b-5">{{a.first_name}} {{a.last_name}}</h2>
+                            <p class="m-b-5"> {{a.email}}</p>
+
+
+                        {% if a.is_staff %}
+                        <p class="text-opacity font-size-13">Administrador</p>
+
+
+                        {% else %}
+                        <p class="text-opacity font-size-13">Trabajador</p>
+
+                        {% endif %}
+                                <!-- <p class="text-dark m-b-20">Frontend Developer, UI/UX Designer</p>
+                                <button class="btn btn-primary btn-tone">Contact</button> -->
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="d-md-block d-none border-left col-1"></div>
+                        <div class="col">
+                            <ul class="list-unstyled m-t-10">
+                                <li class="row">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="m-b-0">Registros totales</p>
+                                                <h2 class="m-b-0">
+                                                    <span>{{count_regist}} </span>
+                                                </h2>
+                                            </div>
+                                            <div class="avatar avatar-icon avatar-lg avatar-cyan">
+                                                <i class="anticon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="m-b-0">Ingresos</p>
+                                                <h2 class="m-b-0">
+                                                    <span>{{count_ingreso}}</span>
+                                                </h2>
+                                            </div>
+                                            <div class="avatar avatar-icon avatar-lg avatar-red">
+                                                <i class="anticon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p class="m-b-0">Salidas</p>
+                                                <h2 class="m-b-0">
+                                                    <span>{{count_salida}} </span>
+                                                </h2>
+                                            </div>
+                                            <div class="avatar avatar-icon avatar-lg avatar-gold">
+                                                <i class="anticon"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    
+                                    
+                                    
+                                </li>
+                                
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="card">
+
+    
+        <div class="card-body">
+            <h4>Ultimos registros</h4>
+            <div class="row align-items-md-center">
+                <div class="col-md-4">
+                    
+                </div>
+                <div class="col-md-8">
+                    <div class="text-md-right m-v-10">
+                        <div class="btn-group m-r-10">
+                            
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 table-responsive">
+                <table  id="data-table"class="table dataTables">
+                    <thead>
+                        <tr>
+                            <th>Ordenado por fecha</th>
+
+                            <th>Item</th>
+                            <th>Movimiento</th>
+                            <th>Cantidad</th>
+                            <th>Stock remanente</th>
+                            <th>Unidad</th>
+
+
+                            <th>Asignación</th>
+                            <th>Frente</th>
+
+                            <th>Horómetro</th>
+                            <th>Registrado por</th>
+                            <th>Fecha registro</th>
+                            <th></th>
+                            <th></th>
+
+
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for i in registros_usuario %}
+                        <tr>
+                            <td>{{i.fecha.year}}/{{i.fecha.month}}/{{i.fecha.day}}</td>
+
+                            <td>{{i.item}}</td>
+
+                            
+                            <td>{{i.movimiento}}</td>
+                            <td>{{i.cantidad}}</td>
+                            <td>{{i.stock}}</td>
+                            <td>{{i.item.unidad}} </td>
+
+                            {% if i.asignacion.nombre == "x" %}
+                            <td> </td>
+
+                            {% else %}
+
+                            <td>{{i.asignacion}}</td>
+
+                            {% endif %}
+
+                            {% if i.frente.nombre == "x" %}
+                            <td> </td>
+
+                            {% else %}
+
+                            <td>{{i.frente}}</td>
+
+                            {% endif %}
+
+
+                            {% if i.horometro == 0.0 %}
+                            <td> </td>
+
+                            {% else %}
+                            <td>{{i.horometro}}</td>
+
+                            {% endif %}
+
+                            <td>{{i.creador_registro.first_name}}  {{i.creador_registro.last_name}}</td>
+                            <td>{{i.fecha_registro.year}}/{{i.fecha_registro.month}}/{{i.fecha_registro.day}}</td>
+
+                            <td class="text-right">
+                                <a href="{% url 'edit_registro' i.id %} ">  <button class="btn btn-success m-r-5">
+                                    Editar 
+                                </button>
+                            </a>
+                            </td>
+                            <td class="text-right">
+                                <a href="{% url 'eliminar_registro' i.id %} ">  <button class="btn btn-danger  m-r-5">
+                                    Eliminar 
+                                </button>
+                            </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+            
+    <link href="../../../static/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet">
+
+    <!-- page js -->
+    <script src="../../../static/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../../static/assets/vendors/datatables/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $('#data-table').DataTable({ /* Disable initial sort */
+             "aaSorting": [] });
+    </script>
+
+
+    
+
+</div>
+
+{% endblock %}  
